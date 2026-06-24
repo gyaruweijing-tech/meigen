@@ -213,7 +213,13 @@ const QUOTES = [
   { text: "やつはとんでもないものを盗んでいきました。あなたの心です", author: "銭形警部（『ルパン三世』より）" },
 ];
 
-// Service Worker など他のスクリプトからも参照できるように公開
+// ブラウザのページから参照できるように window へ公開する。
+// （const で宣言した変数は自動では window に付かないため、明示的に渡す）
+if (typeof window !== "undefined") {
+  window.QUOTES = QUOTES;
+}
+
+// Node.js など他の環境からも参照できるように公開
 if (typeof module !== "undefined" && module.exports) {
   module.exports = QUOTES;
 }
