@@ -24,9 +24,9 @@ def mix(c1, c2, t):
     return tuple(int(round(lerp(c1[i], c2[i], t))) for i in range(3))
 
 
-# Palette (matches the app's CSS gradient).
-TOP = (124, 92, 255)      # violet
-BOTTOM = (24, 19, 48)     # deep indigo/near-black
+# Palette (matches the app's CSS gradient) — brighter version.
+TOP = (152, 122, 255)     # bright violet
+BOTTOM = (255, 122, 178)  # bright pink
 ACCENT = (255, 255, 255)  # quote marks
 
 

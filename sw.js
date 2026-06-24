@@ -4,7 +4,7 @@
  * 名言を差し替えた（quotes.js を更新した）ときは、下の CACHE のバージョン番号を
  * 1つ上げると、確実に最新版が反映されます（例: v1 -> v2）。
  */
-const CACHE = "meigen-v1";
+const CACHE = "meigen-v2";
 const ASSETS = [
   "./",
   "./index.html",

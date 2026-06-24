@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#15101f" />
+  <meta name="theme-color" content="#3a2a78" />
   <title>名言シャッフル — meigen</title>
   <meta name="description" content="心に響く名言をランダムに表示するシンプルなアプリ。タップやスワイプで次の名言へ。" />
 
@@ -21,14 +21,14 @@
 
   <style>
     :root {
-      --bg-0: #0c0a14;
-      --bg-1: #15101f;
-      --ink: #f4f1ff;
-      --ink-soft: rgba(244, 241, 255, 0.62);
-      --accent: #9a7bff;
-      --accent-2: #ff7eb6;
-      --card: rgba(255, 255, 255, 0.04);
-      --card-border: rgba(255, 255, 255, 0.10);
+      --bg-0: #241a52;
+      --bg-1: #3a2a78;
+      --ink: #fbf9ff;
+      --ink-soft: rgba(251, 249, 255, 0.78);
+      --accent: #c4a8ff;
+      --accent-2: #ff9ecb;
+      --card: rgba(255, 255, 255, 0.10);
+      --card-border: rgba(255, 255, 255, 0.20);
       --fade: 460ms;
     }
 
@@ -58,9 +58,10 @@
       inset: 0;
       z-index: -2;
       background:
-        radial-gradient(120% 90% at 15% 10%, #2a1d4d 0%, transparent 55%),
-        radial-gradient(110% 80% at 85% 90%, #3a1f3d 0%, transparent 55%),
-        linear-gradient(160deg, var(--bg-1), var(--bg-0) 70%);
+        radial-gradient(120% 90% at 15% 8%, #6a4fd0 0%, transparent 58%),
+        radial-gradient(110% 80% at 85% 92%, #c75ea8 0%, transparent 58%),
+        radial-gradient(90% 70% at 90% 12%, #4f73e0 0%, transparent 55%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-0) 72%);
     }
 
     /* slowly drifting blobs */
@@ -69,26 +70,26 @@
       z-index: -1;
       border-radius: 50%;
       filter: blur(70px);
-      opacity: 0.55;
+      opacity: 0.7;
       will-change: transform;
     }
     .blob.b1 {
       width: 46vmax; height: 46vmax;
       left: -14vmax; top: -10vmax;
-      background: radial-gradient(circle at 30% 30%, #6f4bff, transparent 70%);
+      background: radial-gradient(circle at 30% 30%, #9a72ff, transparent 70%);
       animation: drift1 26s ease-in-out infinite;
     }
     .blob.b2 {
       width: 40vmax; height: 40vmax;
       right: -12vmax; bottom: -12vmax;
-      background: radial-gradient(circle at 70% 70%, #ff5fa2, transparent 70%);
+      background: radial-gradient(circle at 70% 70%, #ff7db8, transparent 70%);
       animation: drift2 32s ease-in-out infinite;
     }
     .blob.b3 {
       width: 30vmax; height: 30vmax;
       right: 8vmax; top: 12vmax;
-      background: radial-gradient(circle at 50% 50%, #2f8bff, transparent 70%);
-      opacity: 0.35;
+      background: radial-gradient(circle at 50% 50%, #5fa8ff, transparent 70%);
+      opacity: 0.5;
       animation: drift3 22s ease-in-out infinite;
     }
 
@@ -111,8 +112,8 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      opacity: 0.05;
-      background-image: radial-gradient(rgba(255,255,255,0.8) 0.5px, transparent 0.6px);
+      opacity: 0.04;
+      background-image: radial-gradient(rgba(255,255,255,0.9) 0.5px, transparent 0.6px);
       background-size: 4px 4px;
     }
 
@@ -204,6 +205,63 @@
     .author::before {
       content: "— ";
       color: var(--accent);
+    }
+
+    /* ===== Meaning / note ===== */
+    .note-toggle {
+      appearance: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin: 20px auto 0;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: transform 140ms ease, background 200ms ease;
+    }
+    .note-toggle svg { width: 15px; height: 15px; }
+    .note-toggle:active { transform: scale(0.94); }
+    .note-toggle[aria-expanded="true"] {
+      background: rgba(196, 168, 255, 0.16);
+    }
+
+    .note-wrap {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 380ms cubic-bezier(.22,.61,.36,1),
+                  opacity 320ms ease, margin-top 380ms ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+    .note-wrap.open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin-top: 16px;
+    }
+    .note {
+      overflow: hidden;
+      margin: 0;
+      font-family: "Zen Kaku Gothic New", sans-serif;
+      font-weight: 400;
+      font-size: clamp(13px, 3.7vw, 15.5px);
+      line-height: 1.95;
+      letter-spacing: 0.03em;
+      color: rgba(251, 249, 255, 0.86);
+      text-align: left;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 16px 18px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     /* ===== Controls ===== */
@@ -323,6 +381,15 @@
         <span class="mark" aria-hidden="true">&#8220;</span>
         <blockquote class="text" id="text"></blockquote>
         <figcaption class="author" id="author"></figcaption>
+        <button class="note-toggle" id="note-toggle" type="button" hidden aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.5h.01"/>
+          </svg>
+          <span class="note-toggle-label">意味をみる</span>
+        </button>
+        <div class="note-wrap" id="note-wrap">
+          <p class="note" id="note"></p>
+        </div>
       </figure>
     </main>
 
@@ -364,6 +431,10 @@
       var authorEl = document.getElementById("author");
       var favBtn = document.getElementById("fav");
       var toastEl = document.getElementById("toast");
+      var noteToggle = document.getElementById("note-toggle");
+      var noteWrap = document.getElementById("note-wrap");
+      var noteEl = document.getElementById("note");
+      var noteLabel = noteToggle.querySelector(".note-toggle-label");
 
       var current = -1;
       var animating = false;
@@ -396,11 +467,28 @@
         favBtn.classList.toggle("is-active", on);
       }
 
+      function collapseNote() {
+        noteWrap.classList.remove("open");
+        noteToggle.setAttribute("aria-expanded", "false");
+        noteLabel.textContent = "意味をみる";
+      }
+
       function render(i) {
         current = i;
         var q = list[i];
         textEl.textContent = q.text;
         authorEl.textContent = q.author;
+
+        // 解説(note)があるものだけ「意味をみる」ボタンを表示
+        collapseNote();
+        if (q.note) {
+          noteEl.textContent = q.note;
+          noteToggle.hidden = false;
+        } else {
+          noteEl.textContent = "";
+          noteToggle.hidden = true;
+        }
+
         refreshFavState();
       }
 
@@ -447,6 +535,18 @@
       // tap on the quote area to shuffle
       document.getElementById("tap-area").addEventListener("click", function () {
         shuffle();
+      });
+
+      // 「意味をみる」トグル（タップでシャッフルされないよう伝播を止める）
+      noteToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var open = noteWrap.classList.toggle("open");
+        noteToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        noteLabel.textContent = open ? "とじる" : "意味をみる";
+      });
+      // 解説を読んでいる間のタップでシャッフルさせない
+      noteWrap.addEventListener("click", function (e) {
+        e.stopPropagation();
       });
 
       // favorite
