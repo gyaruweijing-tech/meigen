@@ -1,15 +1,15 @@
 {
   "name": "名言シャッフル",
   "short_name": "名言",
-  "description": "心に響く名言をランダムに表示するシンプルなアプリ。",
+  "description": "心に響く名言と、全然関係ない画像。※画像はイメージです",
   "lang": "ja",
   "dir": "ltr",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#241a52",
-  "theme_color": "#3a2a78",
+  "background_color": "#fdfcfa",
+  "theme_color": "#fdfcfa",
   "categories": ["lifestyle", "books", "education"],
   "icons": [
     {

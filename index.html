@@ -3,32 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#3a2a78" />
+  <meta name="theme-color" content="#fdfcfa" />
   <title>名言シャッフル — meigen</title>
-  <meta name="description" content="心に響く名言をランダムに表示するシンプルなアプリ。タップやスワイプで次の名言へ。" />
+  <meta name="description" content="心に響く名言と、全然関係ない画像。※画像はイメージです" />
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="名言" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg-0: #241a52;
-      --bg-1: #3a2a78;
-      --ink: #fbf9ff;
-      --ink-soft: rgba(251, 249, 255, 0.78);
-      --accent: #c4a8ff;
-      --accent-2: #ff9ecb;
-      --card: rgba(255, 255, 255, 0.10);
-      --card-border: rgba(255, 255, 255, 0.20);
+      --paper: #fdfcfa;
+      --ink: #1c1c1c;
+      --sub: #6b6b6b;
+      --faint: #9a9a9a;
+      --line: #e4e2dd;
+      --accent: #b0532f;
       --fade: 460ms;
     }
 
@@ -42,9 +35,9 @@
     }
 
     body {
-      font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", system-ui, sans-serif;
       color: var(--ink);
-      background: var(--bg-0);
+      background: var(--paper);
       position: relative;
       min-height: 100svh;
       -webkit-font-smoothing: antialiased;
@@ -52,74 +45,7 @@
       user-select: none;
     }
 
-    /* ===== Animated background ===== */
-    .bg {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      background:
-        radial-gradient(120% 90% at 15% 8%, #6a4fd0 0%, transparent 58%),
-        radial-gradient(110% 80% at 85% 92%, #c75ea8 0%, transparent 58%),
-        radial-gradient(90% 70% at 90% 12%, #4f73e0 0%, transparent 55%),
-        linear-gradient(160deg, var(--bg-1), var(--bg-0) 72%);
-    }
-
-    /* slowly drifting blobs */
-    .blob {
-      position: fixed;
-      z-index: -1;
-      border-radius: 50%;
-      filter: blur(70px);
-      opacity: 0.7;
-      will-change: transform;
-    }
-    .blob.b1 {
-      width: 46vmax; height: 46vmax;
-      left: -14vmax; top: -10vmax;
-      background: radial-gradient(circle at 30% 30%, #9a72ff, transparent 70%);
-      animation: drift1 26s ease-in-out infinite;
-    }
-    .blob.b2 {
-      width: 40vmax; height: 40vmax;
-      right: -12vmax; bottom: -12vmax;
-      background: radial-gradient(circle at 70% 70%, #ff7db8, transparent 70%);
-      animation: drift2 32s ease-in-out infinite;
-    }
-    .blob.b3 {
-      width: 30vmax; height: 30vmax;
-      right: 8vmax; top: 12vmax;
-      background: radial-gradient(circle at 50% 50%, #5fa8ff, transparent 70%);
-      opacity: 0.5;
-      animation: drift3 22s ease-in-out infinite;
-    }
-
-    @keyframes drift1 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50%      { transform: translate(6vmax, 5vmax) scale(1.12); }
-    }
-    @keyframes drift2 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50%      { transform: translate(-5vmax, -6vmax) scale(1.15); }
-    }
-    @keyframes drift3 {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50%      { transform: translate(-4vmax, 4vmax) scale(0.9); }
-    }
-
-    /* subtle star/grain overlay */
-    .grain {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      opacity: 0.04;
-      background-image: radial-gradient(rgba(255,255,255,0.9) 0.5px, transparent 0.6px);
-      background-size: 4px 4px;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .blob { animation: none; }
-    }
+    .serif { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; }
 
     /* ===== Layout ===== */
     .app {
@@ -136,16 +62,10 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-family: "Shippori Mincho", serif;
-      letter-spacing: 0.22em;
-      font-size: 13px;
-      color: var(--ink-soft);
-      text-transform: none;
-    }
-    header .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
+      letter-spacing: 0.25em;
+      font-size: 12px;
+      color: var(--faint);
+      text-transform: uppercase;
     }
 
     /* ===== Quote card ===== */
@@ -155,11 +75,12 @@
       align-items: center;
       justify-content: center;
       width: 100%;
+      min-height: 0;
     }
 
     .quote {
       width: 100%;
-      max-width: 600px;
+      max-width: 520px;
       text-align: center;
       padding: 6px 6px 0;
       transition: opacity var(--fade) ease, transform var(--fade) cubic-bezier(.22,.61,.36,1);
@@ -173,34 +94,41 @@
       transform: translateY(0) scale(1);
     }
 
-    .mark {
-      font-family: "Shippori Mincho", serif;
-      font-size: 64px;
-      line-height: 0.4;
-      color: var(--accent);
-      opacity: 0.5;
+    /* ランダム画像（全然関係ない） */
+    .photo-wrap {
+      max-width: 320px;
+      margin: 0 auto 6px;
+    }
+    .photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
       display: block;
-      margin-bottom: 14px;
-      text-shadow: 0 0 24px rgba(154, 123, 255, 0.4);
+      border: 1px solid var(--line);
+      background: #f1efe9;
+    }
+    .photo-caption {
+      font-size: 10.5px;
+      color: var(--faint);
+      letter-spacing: 0.08em;
+      margin: 6px 0 18px;
     }
 
     .text {
-      font-family: "Shippori Mincho", serif;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
       font-weight: 600;
-      font-size: clamp(22px, 6.4vw, 34px);
+      font-size: clamp(19px, 5.4vw, 28px);
       line-height: 1.85;
       letter-spacing: 0.04em;
       margin: 0 auto;
       text-wrap: balance;
-      text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
     }
 
     .author {
-      margin-top: 30px;
-      font-size: clamp(13px, 3.6vw, 16px);
-      color: var(--ink-soft);
+      margin-top: 18px;
+      font-size: clamp(12px, 3.4vw, 15px);
+      color: var(--sub);
       letter-spacing: 0.08em;
-      font-weight: 500;
     }
     .author::before {
       content: "— ";
@@ -214,24 +142,20 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin: 20px auto 0;
+      margin: 18px auto 0;
       padding: 8px 16px;
       border-radius: 999px;
       font-family: inherit;
       font-size: 12.5px;
       letter-spacing: 0.08em;
       color: var(--accent);
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: transparent;
+      border: 1px solid var(--line);
       transition: transform 140ms ease, background 200ms ease;
     }
     .note-toggle svg { width: 15px; height: 15px; }
     .note-toggle:active { transform: scale(0.94); }
-    .note-toggle[aria-expanded="true"] {
-      background: rgba(196, 168, 255, 0.16);
-    }
+    .note-toggle[aria-expanded="true"] { background: #f6f4ef; }
 
     .note-wrap {
       display: grid;
@@ -249,19 +173,16 @@
     .note {
       overflow: hidden;
       margin: 0;
-      font-family: "Zen Kaku Gothic New", sans-serif;
       font-weight: 400;
-      font-size: clamp(13px, 3.7vw, 15.5px);
+      font-size: clamp(13px, 3.7vw, 15px);
       line-height: 1.95;
       letter-spacing: 0.03em;
-      color: rgba(251, 249, 255, 0.86);
+      color: var(--sub);
       text-align: left;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
+      background: #faf8f4;
+      border: 1px solid var(--line);
+      border-radius: 4px;
       padding: 16px 18px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
     }
 
     /* ===== Controls ===== */
@@ -269,30 +190,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
       margin-top: 8px;
     }
 
     .next-btn {
       appearance: none;
-      border: none;
       cursor: pointer;
       font-family: inherit;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: #fff;
-      padding: 15px 40px;
-      border-radius: 999px;
-      background: linear-gradient(120deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 30px rgba(122, 74, 255, 0.35),
-                  inset 0 1px 0 rgba(255,255,255,0.25);
-      transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--paper);
+      padding: 14px 44px;
+      border-radius: 2px;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      transition: transform 140ms ease, background 200ms ease;
     }
-    .next-btn:active {
-      transform: scale(0.95);
-      filter: brightness(1.05);
-    }
+    .next-btn:active { transform: scale(0.96); }
 
     .icon-row {
       display: flex;
@@ -301,27 +217,24 @@
     .icon-btn {
       appearance: none;
       cursor: pointer;
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       display: grid;
       place-items: center;
       border-radius: 50%;
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      color: var(--ink);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--sub);
       transition: transform 140ms ease, background 200ms ease, border-color 200ms ease;
     }
     .icon-btn:active { transform: scale(0.9); }
-    .icon-btn svg { width: 24px; height: 24px; }
+    .icon-btn svg { width: 22px; height: 22px; }
 
     .icon-btn.fav.is-active {
-      background: rgba(255, 94, 162, 0.16);
-      border-color: rgba(255, 94, 162, 0.55);
-      color: var(--accent-2);
+      border-color: var(--accent);
+      color: var(--accent);
     }
-    .icon-btn.fav.is-active svg { fill: var(--accent-2); }
+    .icon-btn.fav.is-active svg { fill: var(--accent); }
     @keyframes pop {
       0% { transform: scale(1); }
       45% { transform: scale(1.35); }
@@ -331,8 +244,8 @@
 
     .hint {
       text-align: center;
-      font-size: 11.5px;
-      color: rgba(244,241,255,0.34);
+      font-size: 11px;
+      color: var(--faint);
       letter-spacing: 0.12em;
       margin-top: 4px;
     }
@@ -343,9 +256,8 @@
       left: 50%;
       bottom: calc(env(safe-area-inset-bottom) + 110px);
       transform: translate(-50%, 20px);
-      background: rgba(20, 16, 30, 0.92);
-      border: 1px solid var(--card-border);
-      color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
       padding: 10px 20px;
       border-radius: 999px;
       font-size: 13px;
@@ -353,7 +265,6 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 220ms ease, transform 220ms ease;
-      backdrop-filter: blur(8px);
       z-index: 10;
     }
     .toast.show {
@@ -363,22 +274,18 @@
   </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
-  <div class="grain"></div>
-
   <div class="app">
     <header>
-      <span class="dot"></span>
       <span>名言シャッフル</span>
     </header>
 
     <!-- tappable area to shuffle -->
     <main id="tap-area">
       <figure class="quote is-in" id="quote">
-        <span class="mark" aria-hidden="true">&#8220;</span>
+        <div class="photo-wrap">
+          <img class="photo" id="photo" alt="" />
+          <p class="photo-caption">※画像はイメージです</p>
+        </div>
         <blockquote class="text" id="text"></blockquote>
         <figcaption class="author" id="author"></figcaption>
         <button class="note-toggle" id="note-toggle" type="button" hidden aria-expanded="false">
@@ -429,6 +336,7 @@
       var quoteEl = document.getElementById("quote");
       var textEl = document.getElementById("text");
       var authorEl = document.getElementById("author");
+      var photoEl = document.getElementById("photo");
       var favBtn = document.getElementById("fav");
       var toastEl = document.getElementById("toast");
       var noteToggle = document.getElementById("note-toggle");
@@ -459,6 +367,17 @@
         return i;
       }
 
+      /* 全然関係ない画像を選ぶ。
+         - pravatar: フリー素材の「普通の人」の顔（偉人ではない）
+         - picsum:   ランダムな風景・モノの写真 */
+      function pickImageUrl() {
+        if (Math.random() < 0.5) {
+          var n = 1 + Math.floor(Math.random() * 70);
+          return "https://i.pravatar.cc/480?img=" + n;
+        }
+        return "https://picsum.photos/seed/" + Math.floor(Math.random() * 100000) + "/640/480";
+      }
+
       function refreshFavState() {
         var q = list[current];
         if (!q) return;
@@ -478,6 +397,7 @@
         var q = list[i];
         textEl.textContent = q.text;
         authorEl.textContent = q.author;
+        photoEl.src = pickImageUrl();
 
         // 解説(note)があるものだけ「意味をみる」ボタンを表示
         collapseNote();
@@ -491,6 +411,14 @@
 
         refreshFavState();
       }
+
+      // 画像が取れなかったら枠ごと目立たなくする（オフライン等）
+      photoEl.addEventListener("error", function () {
+        photoEl.style.visibility = "hidden";
+      });
+      photoEl.addEventListener("load", function () {
+        photoEl.style.visibility = "visible";
+      });
 
       function show(i) {
         // fade out -> swap -> fade in
